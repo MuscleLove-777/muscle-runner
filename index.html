@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>筋肉ランナー / Muscle Runner | MuscleLove</title>
+  <meta name="description" content="走って、跳んで、プロテインを集めろ！筋肉エンドレスランナーゲーム | Run, jump, collect protein! Muscle endless runner game">
+  <meta property="og:title" content="筋肉ランナー / Muscle Runner | MuscleLove">
+  <meta property="og:description" content="走って、跳んで、プロテインを集めろ！💪">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="game-canvas"></canvas>
+
+    <!-- HUD -->
+    <div id="hud" style="display:none;">
+      <div class="hud-item">🏃 <span id="hud-distance">0</span>m</div>
+      <div class="hud-item">🥤 <span id="hud-protein">0</span></div>
+      <div class="hud-item">⭐ <span id="hud-stars">0</span></div>
+    </div>
+
+    <!-- Title Screen -->
+    <div id="title-screen">
+      <div class="title-main">MUSCLE RUNNER</div>
+      <div class="title-sub">筋肉ランナー</div>
+      <button class="start-btn" id="btn-start">START</button>
+      <div class="title-hint">スペース / タップ でジャンプ<br>Space / Tap to Jump</div>
+      <div class="patreon-cta">
+        <a href="https://www.patreon.com/cw/MuscleLove" target="_blank" rel="noopener">
+          ❤️ Support on Patreon
+        </a>
+      </div>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="gameover-screen">
+      <div class="gameover-title">GAME OVER</div>
+      <div class="result-box">
+        <div class="result-row">走行距離 / Distance<span class="val" id="res-distance">0</span>m<span class="best-label" id="res-best" style="display:none;">BEST!</span></div>
+        <div class="result-row">プロテイン / Protein<span class="val" id="res-protein">0</span></div>
+        <div class="result-row">スター / Stars<span class="val" id="res-stars">0</span></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn-retry" id="btn-retry">RETRY</button>
+        <button class="btn-share" id="btn-x-share">𝕏 SHARE</button>
+      </div>
+      <div class="patreon-cta">
+        <a href="https://www.patreon.com/cw/MuscleLove" target="_blank" rel="noopener">
+          ❤️ もっと筋肉を応援する / Support MuscleLove
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Brand Footer -->
+  <div id="brand-footer">
+    <div class="brand-name">MUSCLELOVE</div>
+    <div class="brand-link">
+      <a href="https://www.patreon.com/cw/MuscleLove" target="_blank" rel="noopener">patreon.com/cw/MuscleLove</a>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>

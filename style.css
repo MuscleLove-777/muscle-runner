@@ -1,0 +1,312 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #0a0a0f;
+  color: #fff;
+  font-family: 'Orbitron', 'Noto Sans JP', sans-serif;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#game-container {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  aspect-ratio: 16 / 9;
+  border: 2px solid #ff2d95;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(255, 45, 149, 0.4), 0 0 60px rgba(0, 255, 255, 0.15);
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #0a0a0f;
+}
+
+/* HUD overlay */
+#hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.hud-item {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  color: #00ffff;
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+  letter-spacing: 1px;
+}
+
+.hud-item span {
+  color: #ff2d95;
+  font-weight: 700;
+}
+
+/* Title screen overlay */
+#title-screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 10, 15, 0.92);
+  z-index: 20;
+  transition: opacity 0.5s;
+}
+
+#title-screen.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.title-main {
+  font-size: clamp(28px, 5vw, 52px);
+  font-weight: 900;
+  background: linear-gradient(135deg, #ff2d95, #00ffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+  margin-bottom: 4px;
+  letter-spacing: 2px;
+}
+
+.title-sub {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: clamp(14px, 2.5vw, 22px);
+  color: #aaa;
+  margin-bottom: 30px;
+  letter-spacing: 3px;
+}
+
+.start-btn {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 14px 48px;
+  border: 2px solid #ff2d95;
+  border-radius: 50px;
+  background: transparent;
+  color: #ff2d95;
+  cursor: pointer;
+  letter-spacing: 2px;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.start-btn:hover {
+  background: #ff2d95;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(255, 45, 149, 0.5);
+}
+
+.title-hint {
+  font-size: 11px;
+  color: #666;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+/* Game Over overlay */
+#gameover-screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 10, 15, 0.92);
+  z-index: 20;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s;
+}
+
+#gameover-screen.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.gameover-title {
+  font-size: clamp(24px, 4vw, 42px);
+  font-weight: 900;
+  color: #ff2d95;
+  text-shadow: 0 0 20px rgba(255, 45, 149, 0.5);
+  margin-bottom: 24px;
+}
+
+.result-box {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 45, 149, 0.3);
+  border-radius: 12px;
+  padding: 20px 36px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.result-row {
+  font-size: 15px;
+  color: #ccc;
+  margin: 8px 0;
+  font-family: 'Noto Sans JP', 'Orbitron', sans-serif;
+}
+
+.result-row .val {
+  color: #00ffff;
+  font-weight: 700;
+  font-size: 20px;
+  margin-left: 8px;
+}
+
+.result-row .best-label {
+  color: #ff2d95;
+  font-size: 11px;
+  margin-left: 6px;
+}
+
+.btn-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.btn-retry, .btn-share {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 32px;
+  border-radius: 50px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  border: 2px solid;
+}
+
+.btn-retry {
+  border-color: #00ffff;
+  background: transparent;
+  color: #00ffff;
+}
+
+.btn-retry:hover {
+  background: #00ffff;
+  color: #0a0a0f;
+}
+
+.btn-share {
+  border-color: #1da1f2;
+  background: transparent;
+  color: #1da1f2;
+}
+
+.btn-share:hover {
+  background: #1da1f2;
+  color: #fff;
+}
+
+/* Patreon CTA */
+.patreon-cta {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.patreon-cta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 13px;
+  color: #ff424d;
+  text-decoration: none;
+  padding: 8px 20px;
+  border: 1px solid rgba(255, 66, 77, 0.4);
+  border-radius: 30px;
+  transition: all 0.3s;
+}
+
+.patreon-cta a:hover {
+  background: rgba(255, 66, 77, 0.15);
+  border-color: #ff424d;
+}
+
+/* Brand footer */
+#brand-footer {
+  margin-top: 12px;
+  text-align: center;
+}
+
+#brand-footer .brand-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px;
+  color: #ff2d95;
+  letter-spacing: 3px;
+  text-shadow: 0 0 8px rgba(255, 45, 149, 0.4);
+}
+
+#brand-footer .brand-link {
+  display: block;
+  margin-top: 4px;
+}
+
+#brand-footer .brand-link a {
+  font-size: 11px;
+  color: #ff424d;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+#brand-footer .brand-link a:hover {
+  opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  #game-container {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    max-width: 100%;
+  }
+
+  .hud-item {
+    font-size: 11px;
+  }
+
+  .start-btn, .btn-retry, .btn-share {
+    font-size: 13px;
+    padding: 10px 24px;
+  }
+
+  .result-box {
+    padding: 14px 20px;
+  }
+}
