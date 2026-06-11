@@ -1,72 +1,555 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>筋肉ランナー / Muscle Runner | MuscleLove</title>
-  <meta name="description" content="走って、跳んで、プロテインを集めろ！筋肉エンドレスランナーゲーム | Run, jump, collect protein! Muscle endless runner game">
-  <meta property="og:title" content="筋肉ランナー / Muscle Runner | MuscleLove">
-  <meta property="og:description" content="走って、跳んで、プロテインを集めろ！💪">
-  <meta property="og:type" content="website">
-  <link rel="stylesheet" href="style.css">
-  <meta property="og:image" content="https://musclelove-777.github.io/muscle-runner/og.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:type" content="image/png">
-  <meta name="twitter:image" content="https://musclelove-777.github.io/muscle-runner/og.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<!-- ML SEO v1 -->
+<title>【無料】筋肉ランナー3D - 3Dランナーブラウザゲーム | MuscleLove</title>
+<meta name="description" content="【無料・登録不要】筋肉ランナー3Dは3Dランナーの暇つぶしブラウザゲーム。3レーン無限ランナー！背後からゾンビ集団が迫る！スマホ・PC両対応。筋肉美女と遊ぶMuscleLove提供のミニゲーム。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MUSCLE RUNNER | MuscleLove">
+<meta property="og:description" content="3レーン無限ランナー。背後からゾンビ集団が迫る！障害物4種+収集物3種">
+<meta property="og:image" content="https://musclelove-runner.vercel.app/og-image.png">
+<meta property="og:url" content="https://musclelove-runner.vercel.app/">
+<meta property="og:site_name" content="MuscleLove Games">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@MuscleGirlLove7">
+<meta name="twitter:title" content="MUSCLE RUNNER | MuscleLove">
+<meta name="twitter:description" content="3レーン無限ランナー。背後からゾンビ集団が迫る！障害物4種+収集物3種">
+<meta name="twitter:image" content="https://musclelove-runner.vercel.app/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "MUSCLE RUNNER",
+  "alternateName": "筋肉ランナー3D",
+  "description": "3レーン無限ランナー。背後からゾンビ集団が迫る障害物4種+収集物3種の3Dアクション",
+  "url": "https://musclelove-runner.vercel.app/",
+  "image": "https://musclelove-runner.vercel.app/og-image.png",
+  "thumbnailUrl": "https://musclelove-runner.vercel.app/og-image.png",
+  "genre": ["Action", "Endless Runner"],
+  "playMode": "SinglePlayer",
+  "applicationCategory": "Game",
+  "operatingSystem": "Web Browser",
+  "inLanguage": ["ja-JP", "en"],
+  "isAccessibleForFree": true,
+  "datePublished": "2026-04-26",
+  "publisher": {
+    "@type": "Organization",
+    "name": "MuscleLove",
+    "url": "https://musclelove-games.vercel.app/",
+    "sameAs": [
+      "https://x.com/MuscleGirlLove7",
+      "https://patreon.com/musclelove"
+    ]
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "MuscleLove"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY",
+    "availability": "https://schema.org/InStock"
+  }
+}
+</script>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#3ad6ff">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' fill='%230a0005'/%3E%3Ctext y='75%25' x='50%25' text-anchor='middle' font-size='150'%3E%F0%9F%8F%83%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230a0005'/%3E%3Ctext y='75%25' x='50%25' text-anchor='middle' font-size='50'%3E%F0%9F%8F%83%3C/text%3E%3C/svg%3E">
+<style>
+:root {
+  --ms-red: #FF2D3A;
+  --ms-gold: #F2C94C;
+  --ms-bg: #0a0508;
+  --ms-panel: rgba(10, 5, 8, 0.72);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  width: 100%; height: 100%;
+  background: #000;
+  color: #fff;
+  font-family: 'Impact', 'Arial Narrow', 'Helvetica Inserat', 'Trebuchet MS', sans-serif;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+#gameRoot { width: 100%; height: 100%; position: relative; }
+canvas { display: block; }
+
+/* ---------- HUD ---------- */
+#hud {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+#hudDistance {
+  position: absolute;
+  left: 28px;
+  top: 22px;
+  font-size: 26px;
+  letter-spacing: 0.14em;
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255, 45, 58, 0.45);
+}
+#hudScore {
+  position: absolute;
+  right: 28px;
+  top: 22px;
+  font-size: 26px;
+  letter-spacing: 0.14em;
+  color: var(--ms-gold);
+  text-shadow: 0 0 8px rgba(242, 201, 76, 0.55);
+}
+
+/* HP + Dash bottom-left */
+.hud-bottom-left {
+  position: absolute;
+  left: 28px;
+  bottom: 24px;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+#hpHearts {
+  display: flex;
+  gap: 8px;
+  font-size: 32px;
+  line-height: 1;
+}
+#hpHearts .heart {
+  display: inline-block;
+  transition: opacity 0.12s linear, transform 0.12s linear;
+  text-shadow: 0 0 10px rgba(255, 45, 58, 0.8);
+}
+#hpHearts .heart.on  { opacity: 1;   color: #FF4455; }
+#hpHearts .heart.off { opacity: 0.25; color: #553844; }
+
+#dashBar {
+  width: 100%;
+  height: 18px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 2px solid rgba(255, 45, 58, 0.55);
+  box-shadow: 0 0 12px rgba(255, 45, 58, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+#dashFill {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, #FF4455, #F2C94C);
+  width: 100%;
+  transition: width 0.1s linear;
+}
+
+/* Energy timer (center top) */
+#energyTimer {
+  position: absolute;
+  left: 50%;
+  top: 60px;
+  transform: translateX(-50%);
+  font-size: 28px;
+  letter-spacing: 0.22em;
+  color: var(--ms-gold);
+  text-shadow: 0 0 18px rgba(242, 201, 76, 0.9), 0 0 30px rgba(255, 200, 100, 0.6);
+  display: none;
+  animation: msEnergyPulse 0.7s ease-in-out infinite alternate;
+}
+@keyframes msEnergyPulse {
+  from { filter: brightness(1); transform: translateX(-50%) scale(1); }
+  to   { filter: brightness(1.5); transform: translateX(-50%) scale(1.06); }
+}
+
+/* ---------- Start Screen ---------- */
+#startScreen {
+  position: absolute; inset: 0;
+  z-index: 20;
+  background:
+    radial-gradient(ellipse at center, rgba(180, 20, 35, 0.78) 0%, rgba(20, 5, 10, 1) 55%, #000 100%),
+    linear-gradient(180deg, #180405 0%, #000 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-align: center;
+  overflow: hidden;
+}
+#startScreen::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255,45,58,0.05) 0px,
+    rgba(255,45,58,0.05) 2px,
+    transparent 2px,
+    transparent 5px
+  );
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+#startScreen::after {
+  content: '';
+  position: absolute;
+  left: 10%; right: 10%;
+  top: 42%;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--ms-red), transparent);
+  box-shadow: 0 0 32px 6px rgba(255,45,58,0.8);
+  pointer-events: none;
+  animation: msSlitPulse 1.8s ease-in-out infinite alternate;
+}
+@keyframes msSlitPulse {
+  from { opacity: 0.3; filter: blur(1px); }
+  to   { opacity: 1.0; filter: blur(0px); }
+}
+
+#startScreen h1 {
+  font-size: 96px;
+  letter-spacing: 0.08em;
+  background: linear-gradient(180deg, #FF5055 0%, #F2C94C 60%, #8B3A0A 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow:
+    0 0 20px rgba(255, 45, 58, 0.95),
+    0 0 40px rgba(255, 45, 58, 0.75),
+    0 0 80px rgba(242, 201, 76, 0.35);
+  margin-bottom: 14px;
+  animation: msTitleGlow 2.4s ease-in-out infinite alternate;
+  position: relative; z-index: 2;
+}
+@keyframes msTitleGlow {
+  from { filter: brightness(0.95) drop-shadow(0 0 18px rgba(255, 45, 58, 0.8)); }
+  to   { filter: brightness(1.2)  drop-shadow(0 0 36px rgba(255, 90, 100, 1.0)); }
+}
+#startScreen h2 {
+  font-size: 22px;
+  color: var(--ms-gold);
+  letter-spacing: 0.4em;
+  margin-bottom: 12px;
+  position: relative; z-index: 2;
+}
+#startScreen .subtitle-jp {
+  font-size: 22px;
+  color: #FFD0D4;
+  letter-spacing: 0.4em;
+  margin-bottom: 36px;
+  text-shadow: 0 0 10px rgba(255, 45, 58, 0.6);
+  position: relative; z-index: 2;
+}
+#startScreen .hint {
+  font-size: 20px;
+  color: rgba(255, 240, 240, 0.95);
+  letter-spacing: 0.22em;
+  margin-top: 36px;
+  animation: blink 1.2s infinite alternate;
+  position: relative; z-index: 2;
+}
+#startScreen .controls {
+  font-size: 14px;
+  color: rgba(255, 220, 220, 0.82);
+  letter-spacing: 0.14em;
+  line-height: 1.8em;
+  margin-top: 14px;
+  max-width: 720px;
+  padding: 14px 22px;
+  background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(255, 45, 58, 0.35);
+  box-shadow: 0 0 18px rgba(255, 45, 58, 0.25) inset;
+  position: relative; z-index: 2;
+}
+#startScreen .controls table {
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+#startScreen .controls td {
+  padding: 3px 14px;
+  text-align: left;
+  letter-spacing: 0.12em;
+}
+#startScreen .controls td.k {
+  color: var(--ms-gold);
+  text-align: right;
+  font-weight: bold;
+}
+@keyframes blink { from { opacity: 0.4; } to { opacity: 1; } }
+
+/* GameOver */
+#gameOverScreen {
+  position: absolute; inset: 0;
+  z-index: 25;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  background: rgba(8, 3, 5, 0.85);
+}
+#gameOverScreen h2 {
+  font-size: 96px;
+  color: var(--ms-red);
+  letter-spacing: 0.2em;
+  text-shadow: 0 0 24px rgba(255, 45, 58, 0.8);
+}
+#gameOverScreen p {
+  color: #fff;
+  font-size: 26px;
+  margin-top: 18px;
+  letter-spacing: 0.15em;
+}
+#gameOverScreen .go-hint {
+  color: #F2C94C;
+  margin-top: 20px;
+  font-size: 18px;
+  letter-spacing: 0.18em;
+  opacity: 0.9;
+}
+
+/* ---------- MuscleLove CTA Card ---------- */
+.ml-cta-card {
+  margin-top: 24px;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, rgba(255,45,58,0.15), rgba(242,201,76,0.10));
+  border: 1px solid #FF2D3A;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(255,45,58,0.4);
+  max-width: 420px;
+  pointer-events: auto;
+  font-size: 14px;
+  line-height: 1.7;
+  position: relative;
+  z-index: 3;
+}
+.ml-cta-title { color:#F2C94C; font-size:16px; letter-spacing:2px; margin-bottom:4px; }
+.ml-cta-body { color:#FFEEAA; margin-bottom:8px; }
+.ml-cta-links { display:flex; gap:10px; justify-content:center; }
+.ml-cta-links a {
+  color:#FFF; background:rgba(0,0,0,0.5); padding:6px 12px;
+  border:1px solid #F2C94C; border-radius:4px; text-decoration:none;
+  font-weight:bold; transition: all 0.2s;
+}
+.ml-cta-links a:hover { background:#F2C94C; color:#000; }
+
+/* Unified X share button */
+.ml-share-x {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: 18px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #1DA1F2 0%, #0d8bd9 100%);
+  color: #fff !important;
+  font-family: 'Impact', system-ui, sans-serif;
+  font-size: 18px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  border: 2px solid #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(29,161,242,0.6);
+  transition: all 0.2s;
+  pointer-events: auto;
+  font-weight: bold;
+}
+.ml-share-x:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 32px rgba(29,161,242,0.95);
+  background: linear-gradient(135deg, #34b3ff 0%, #1DA1F2 100%);
+}
+.ml-share-x svg { fill: #fff; }
+
+/* MuscleLove Cross-Promo */
+.ml-cross-promo {
+  margin-top: 28px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, rgba(20,5,8,0.85), rgba(40,10,15,0.85));
+  border: 2px solid #FF2D3A;
+  border-radius: 8px;
+  box-shadow: 0 0 24px rgba(255,45,58,0.5);
+  max-width: 720px;
+  pointer-events: auto;
+  text-align: center;
+}
+.ml-cross-title {
+  color: #F2C94C;
+  font-family: 'Impact', sans-serif;
+  font-size: 18px;
+  letter-spacing: 4px;
+  margin-bottom: 12px;
+  text-shadow: 0 0 8px rgba(242,201,76,0.6);
+}
+.ml-cross-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.ml-cross-card {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 4px;
+  padding: 10px 6px;
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(255,45,58,0.55);
+  border-radius: 6px;
+  text-decoration: none;
+  color: #fff;
+  font-family: system-ui, sans-serif;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.ml-cross-card:hover {
+  transform: translateY(-2px) scale(1.04);
+  background: rgba(40,15,20,0.85);
+  border-color: #FF2D3A;
+  box-shadow: 0 0 16px rgba(255,45,58,0.7);
+}
+.ml-cross-emoji { font-size: 24px; line-height: 1; }
+.ml-cross-name { font-size: 13px; color: #fff; font-weight: bold; letter-spacing: 1px; }
+.ml-cross-tag { font-size: 10px; color: #F2C94C; opacity: 0.85; letter-spacing: 1px; }
+.ml-cross-portal {
+  display: inline-block;
+  padding: 8px 18px;
+  background: linear-gradient(135deg, #F2C94C, #B45309);
+  color: #000 !important;
+  font-family: 'Impact', sans-serif;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+.ml-cross-portal:hover { transform: scale(1.05); box-shadow: 0 0 14px rgba(242,201,76,0.8); }
+</style>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+  }
+}
+</script>
+<!-- ML Analytics: GA4 + Vercel Web Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HJLCFVY5TF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-HJLCFVY5TF', { send_page_view: true });
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<!-- /ML Analytics -->
+<script defer src="https://musclelove-games.vercel.app/ml-events.js" data-ml-events="v1"></script>
 </head>
-<body>
-  <div id="game-container">
-    <canvas id="game-canvas"></canvas>
+<body><div data-tag="ml-pr-bar-v1" style="background:#fef3c7;color:#78350f;padding:6px 12px;text-align:center;font-size:12px;border-bottom:1px solid #fcd34d;font-family:system-ui,sans-serif;line-height:1.4">当サイトの記事には広告（アフィリエイトリンク）が含まれる場合があります。掲載順位や紹介内容は当サイトの編集方針に基づきます。</div>
+<div id="gameRoot">
+  <div id="hud">
+    <div id="hudDistance">DIST: 0m</div>
+    <div id="hudScore">SCORE: 0</div>
 
-    <!-- HUD -->
-    <div id="hud" style="display:none;">
-      <div class="hud-item">🏃 <span id="hud-distance">0</span>m</div>
-      <div class="hud-item">🥤 <span id="hud-protein">0</span></div>
-      <div class="hud-item">⭐ <span id="hud-stars">0</span></div>
+    <div class="hud-bottom-left">
+      <div id="hpHearts">
+        <span class="heart on">&#9829;</span>
+        <span class="heart on">&#9829;</span>
+        <span class="heart on">&#9829;</span>
+      </div>
+      <div id="dashBar"><div id="dashFill"></div></div>
     </div>
 
-    <!-- Title Screen -->
-    <div id="title-screen">
-      <div class="title-main">MUSCLE RUNNER</div>
-      <div class="title-sub">筋肉ランナー</div>
-      <button class="start-btn" id="btn-start">START</button>
-      <div class="title-hint">スペース / タップ でジャンプ<br>Space / Tap to Jump</div>
-      <div class="patreon-cta">
-        <a href="https://www.patreon.com/cw/MuscleLove" target="_blank" rel="noopener">
-          ❤️ Support on Patreon
-        </a>
+    <div id="energyTimer">ENERGY 0.0s</div>
+  </div>
+
+  <div id="startScreen">
+    <h1>MUSCLE RUNNER</h1>
+    <h2>by MuscleLove</h2>
+    <div class="subtitle-jp">筋肉美女無限ランナー</div>
+    <div class="controls">
+      <table>
+        <tr><td class="k">A / &#8592;</td><td>LEFT LANE</td><td class="k">D / &#8594;</td><td>RIGHT LANE</td></tr>
+        <tr><td class="k">SPACE</td><td>JUMP</td><td class="k">S</td><td>SLIDE</td></tr>
+        <tr><td class="k">SHIFT</td><td>DASH (HOLD)</td><td class="k">ESC</td><td>PAUSE</td></tr>
+      </table>
+    </div>
+    <div class="hint">CLICK TO START</div>
+
+    <button type="button" class="ml-share-x" id="shareXTitle" onclick="event.stopPropagation(); window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent('MUSCLE RUNNER で筋肉美女無限ランナー！💪 3レーン無限ランナー #MuscleLove') + '&url=' + encodeURIComponent('https://musclelove-runner.vercel.app/'), '_blank', 'noopener');">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      <span>Xでシェア / Share on X</span>
+    </button>
+
+    <div class="ml-cta-card" id="ctaTitle">
+      <div class="ml-cta-title">&#128170; MuscleLove 公式</div>
+      <div class="ml-cta-body">新作ゲーム/動画/作品の最新情報はフォローで！</div>
+      <div class="ml-cta-links">
+        <a href="https://x.com/MuscleGirlLove7" target="_blank" rel="noopener">X (Twitter)</a>
+        <a href="https://patreon.com/musclelove" target="_blank" rel="noopener">Patreon</a>
       </div>
     </div>
-
-    <!-- Game Over Screen -->
-    <div id="gameover-screen">
-      <div class="gameover-title">GAME OVER</div>
-      <div class="result-box">
-        <div class="result-row">走行距離 / Distance<span class="val" id="res-distance">0</span>m<span class="best-label" id="res-best" style="display:none;">BEST!</span></div>
-        <div class="result-row">プロテイン / Protein<span class="val" id="res-protein">0</span></div>
-        <div class="result-row">スター / Stars<span class="val" id="res-stars">0</span></div>
+    <div class="ml-cross-promo">
+      <div class="ml-cross-title">💪 他のMuscleLoveゲームも遊ぶ</div>
+      <div class="ml-cross-grid">
+        <a class="ml-cross-card" href="https://musclelove-fps.vercel.app/" target="_blank" rel="noopener"><span class="ml-cross-emoji">🎯</span><span class="ml-cross-name">筋肉FPS</span><span class="ml-cross-tag">FPS 3D</span></a>
+        <a class="ml-cross-card" href="https://musclelove-slasher.vercel.app/" target="_blank" rel="noopener"><span class="ml-cross-emoji">⚔️</span><span class="ml-cross-name">筋肉スラッシャー</span><span class="ml-cross-tag">Action 3D</span></a>
+        <a class="ml-cross-card" href="https://musclelove-shiren.vercel.app/" target="_blank" rel="noopener"><span class="ml-cross-emoji">🏰</span><span class="ml-cross-name">筋肉シレン</span><span class="ml-cross-tag">Roguelike</span></a>
+        <a class="ml-cross-card" href="https://musclelove-cards.vercel.app/" target="_blank" rel="noopener"><span class="ml-cross-emoji">🃏</span><span class="ml-cross-name">筋肉カード</span><span class="ml-cross-tag">Card Battle</span></a>
+        <a class="ml-cross-card" href="https://musclelove-idle.vercel.app/" target="_blank" rel="noopener"><span class="ml-cross-emoji">💪</span><span class="ml-cross-name">筋肉アイドル</span><span class="ml-cross-tag">Idle RPG</span></a>
       </div>
-      <div class="btn-row">
-        <button class="btn-retry" id="btn-retry">RETRY</button>
-        <button class="btn-share" id="btn-x-share">𝕏 SHARE</button>
-      </div>
-      <div class="patreon-cta">
-        <a href="https://www.patreon.com/cw/MuscleLove" target="_blank" rel="noopener">
-          ❤️ もっと筋肉を応援する / Support MuscleLove
-        </a>
-      </div>
+      <a class="ml-cross-portal" href="https://musclelove-games.vercel.app/" target="_blank" rel="noopener">🏠 全ゲーム一覧（ポータル）</a>
     </div>
   </div>
 
-  <!-- Brand Footer -->
-  <div id="brand-footer">
-    <div class="brand-name">MUSCLELOVE</div>
-    <div class="brand-link">
-      <a href="https://www.patreon.com/cw/MuscleLove" target="_blank" rel="noopener">patreon.com/cw/MuscleLove</a>
+  <div id="gameOverScreen">
+    <h2>GAME OVER</h2>
+    <p>SCORE: <span data-final-score>0</span></p>
+    <p>DIST:  <span data-final-dist>0</span>m</p>
+    <div class="go-hint"><span style="color:#F2C94C;">R</span> を長押し (2秒) でリスタート</div>
+
+    <div class="ml-cta-card" id="ctaGameOver">
+      <div class="ml-cta-title">&#128170; MuscleLove 公式</div>
+      <div class="ml-cta-body">新作ゲーム/動画/作品の最新情報はフォローで！</div>
+      <div class="ml-cta-links">
+        <a href="https://x.com/MuscleGirlLove7" target="_blank" rel="noopener">X (Twitter)</a>
+        <a href="https://patreon.com/musclelove" target="_blank" rel="noopener">Patreon</a>
+      </div>
+    </div>
+    <div class="ml-cross-promo">
+      <div class="ml-cross-title">💪 他のMuscleLoveゲームも遊ぶ</div>
+      <div class="ml-cross-grid">
+        <a class="ml-cross-card" href="https://musclelove-fps.vercel.app/" target="_blank" rel="noopener"><span class="ml-cross-emoji">🎯</span><span class="ml-cross-name">筋肉FPS</span><span class="ml-cross-tag">FPS 3D</span></a>
+        <a class="ml-cross-card" href="https://musclelove-slasher.vercel.app/" target="_blank" rel="noopener"><span class="ml-cross-emoji">⚔️</span><span class="ml-cross-name">筋肉スラッシャー</span><span class="ml-cross-tag">Action 3D</span></a>
+        <a class="ml-cross-card" href="https://musclelove-shiren.vercel.app/" target="_blank" rel="noopener"><span class="ml-cross-emoji">🏰</span><span class="ml-cross-name">筋肉シレン</span><span class="ml-cross-tag">Roguelike</span></a>
+        <a class="ml-cross-card" href="https://musclelove-cards.vercel.app/" target="_blank" rel="noopener"><span class="ml-cross-emoji">🃏</span><span class="ml-cross-name">筋肉カード</span><span class="ml-cross-tag">Card Battle</span></a>
+        <a class="ml-cross-card" href="https://musclelove-idle.vercel.app/" target="_blank" rel="noopener"><span class="ml-cross-emoji">💪</span><span class="ml-cross-name">筋肉アイドル</span><span class="ml-cross-tag">Idle RPG</span></a>
+      </div>
+      <a class="ml-cross-portal" href="https://musclelove-games.vercel.app/" target="_blank" rel="noopener">🏠 全ゲーム一覧（ポータル）</a>
     </div>
   </div>
+</div>
 
-  <script src="game.js"></script>
+<script type="module" src="./src/main.js"></script>
+<!-- ML CrossLink v1: 他のゲーム回遊用フローティングリンク -->
+<a href="https://musclelove-games.vercel.app/?utm_source=ml-game&utm_medium=cross-link&utm_campaign=muscle-runner"
+   target="_top" rel="noopener"
+   id="ml-crosslink"
+   style="position:fixed;left:8px;bottom:8px;z-index:99998;
+          background:linear-gradient(135deg,#FF6B6B,#FF2D3A);color:#fff;
+          padding:6px 11px;border-radius:18px;font-size:11px;font-weight:700;
+          font-family:system-ui,-apple-system,'Hiragino Sans',sans-serif;
+          text-decoration:none;box-shadow:0 4px 14px rgba(255,45,58,0.5);
+          border:1px solid rgba(255,255,255,0.3);
+          line-height:1;display:inline-flex;align-items:center;gap:4px;
+          opacity:0.92;transition:transform .15s,opacity .15s;">
+  🎮&nbsp;他58本</a>
+<script>
+  (function(){
+    var el = document.getElementById('ml-crosslink');
+    if (!el) return;
+    el.addEventListener('mouseover', function(){ el.style.opacity='1'; el.style.transform='scale(1.06)'; });
+    el.addEventListener('mouseout',  function(){ el.style.opacity='0.92'; el.style.transform='scale(1.0)'; });
+  })();
+</script>
+<!-- /ML CrossLink v1 -->
 </body>
 </html>

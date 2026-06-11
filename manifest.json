@@ -1,0 +1,26 @@
+{
+  "name": "MUSCLE RUNNER",
+  "short_name": "ML Runner",
+  "description": "3レーン無限ランナー。背後からゾンビ集団が迫る！障害物4種+収集物3種",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0a0005",
+  "theme_color": "#3ad6ff",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' fill='%230a0005'/%3E%3Ctext y='75%25' x='50%25' text-anchor='middle' font-size='150'%3E%F0%9F%8F%83%3C/text%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%230a0005'/%3E%3Ctext y='75%25' x='50%25' text-anchor='middle' font-size='400'%3E%F0%9F%8F%83%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["games", "entertainment"],
+  "lang": "ja"
+}
